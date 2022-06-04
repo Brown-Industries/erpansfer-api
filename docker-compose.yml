@@ -1,0 +1,9 @@
+version: '3.5'
+services:
+  erpansfer-api:
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+    container_name: erpansfer-api-dev
+    ports:
+      - '3000:3000'
