@@ -10,43 +10,49 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator erd {
+generator erd-svg {
   provider = "prisma-erd-generator"
-  output = "./ERD.svg"
+  output   = "./erpansfer-erd.svg"
+}
+
+generator erd-png {
+  provider = "prisma-erd-generator"
+  output   = "./erpansfer-erd.png"
 }
 
 model OrderHeader {
-  id    Int          @default(autoincrement()) @id
-  createdAt DateTime @default(now())
-  orderId String     @unique
-  detail OrderDetail[]
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  orderId       String          @unique
+  line          OrderLine[]
+  InvoiceHeader InvoiceHeader[]
 }
 
-model OrderDetail {
-  id    Int         @default(autoincrement()) @id
-  item String
+model OrderLine {
+  id          Int         @id @default(autoincrement())
+  item        String
   description String?
-  quantity Int
-  unitPrice Int
-  order OrderHeader @relation(fields: [orderId], references: [orderId])
-  orderId String
+  quantity    Int
+  unitPrice   Int
+  order       OrderHeader @relation(fields: [orderId], references: [orderId])
+  orderId     String
 }
 
 model InvoiceHeader {
-  id    Int     @default(autoincrement()) @id
-  invoiceId String  @unique
-  order Order? @relation(fields: [orderId], references: [id])
-  orderId String? 
-  name  String?
-  posts Post[]
+  id        Int           @id @default(autoincrement())
+  invoiceId String        @unique
+  order     OrderHeader   @relation(fields: [orderId], references: [orderId])
+  orderId   String
+  name      String?
+  line      InvoiceLine[]
 }
 
-model InvoiceLines {
-  id    String     @default(autoincrement()) @id
-  item String
+model InvoiceLine {
+  id          String        @id @default(uuid())
+  item        String
   description String?
-  quantity Int
-  unitPrice Int
-  invoice InvoiceHeader @relation(fields: [invoiceId], references: [invoiceId])
-  invoiceId String
+  quantity    Int
+  unitPrice   Int
+  invoice     InvoiceHeader @relation(fields: [invoiceId], references: [invoiceId])
+  invoiceId   String
 }
