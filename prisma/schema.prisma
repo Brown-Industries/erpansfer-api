@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output = "./ERD.svg"
+}
+
+model OrderHeader {
+  id    Int          @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  orderId String     @unique
+  detail OrderDetail[]
+}
+
+model OrderDetail {
+  id    Int         @default(autoincrement()) @id
+  item String
+  description String?
+  quantity Int
+  unitPrice Int
+  order OrderHeader @relation(fields: [orderId], references: [orderId])
+  orderId String
+}
+
+model InvoiceHeader {
+  id    Int     @default(autoincrement()) @id
+  invoiceId String  @unique
+  order Order? @relation(fields: [orderId], references: [id])
+  orderId String? 
+  name  String?
+  posts Post[]
+}
+
+model InvoiceLines {
+  id    String     @default(autoincrement()) @id
+  item String
+  description String?
+  quantity Int
+  unitPrice Int
+  invoice InvoiceHeader @relation(fields: [invoiceId], references: [invoiceId])
+  invoiceId String
+}
