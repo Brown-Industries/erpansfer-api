@@ -38,6 +38,9 @@ model OrderLine {
   orderId     String
 }
 
+//TODO Consider creating  table for "line status" to track shipping and invoice linking
+//TODO Maybe a generic "shipping" table would be better, can have PO and line #, carrier, tracking id, etc. 
+
 model InvoiceHeader {
   id        Int           @id @default(autoincrement())
   invoiceId String        @unique
