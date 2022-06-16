@@ -48,6 +48,7 @@ model InvoiceHeader {
   orderId   String
   name      String?
   line      InvoiceLine[]
+  createDate DateTime @default(now())
 }
 
 model InvoiceLine {
@@ -74,4 +75,11 @@ model ShippingLine {
   trackingId         String
   refEntityType      String
   refEntityId        String
+  createDate DateTime @default(now())
+}
+
+model Events {
+  id         String   @id @default(uuid())
+  eventType  String
+  createDate DateTime @default(now())
 }
