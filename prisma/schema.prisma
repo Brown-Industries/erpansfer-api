@@ -59,3 +59,14 @@ model InvoiceLine {
   invoice     InvoiceHeader @relation(fields: [invoiceId], references: [invoiceId])
   invoiceId   String
 }
+
+model ShippingProvider {
+  id  String  @id @default(uuid())
+  name String
+  webTracking String?
+}
+
+model ShippingLine {
+  id    String    @id @default(uuid())
+  trackingId      String
+}
