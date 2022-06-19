@@ -1,9 +1,8 @@
-FROM node:14-alpine AS development
+FROM node:16.15.0-alpine3.15 AS development
 WORKDIR "/app"
 COPY . .
-RUN npm ci
+RUN npm install
 RUN npm run build
-RUN npm prune
 CMD [ "sh", "-c", "npm run start:dev"]
 
 FROM node:16.15.0-alpine3.15 AS builder
@@ -13,7 +12,7 @@ RUN npm ci
 RUN npm run build
 RUN npm prune --production
 
-FROM node:14-alpine AS production
+FROM node:16.15.0-alpine3.15 AS production
 WORKDIR "/app"
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/package-lock.json ./package-lock.json

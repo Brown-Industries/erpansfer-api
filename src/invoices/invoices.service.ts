@@ -1,15 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto';
+import { prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class InvoicesService {
+
+  constructor(private prisma: PrismaService){};
+
   create(createInvoiceDto: CreateInvoiceDto) {
     return 'This action adds a new invoice';
   }
 
   findAll() {
-    return `This action returns all invoices`;
+    return this.prisma.invoiceHeader.findMany({});
   }
 
   findOne(id: number) {

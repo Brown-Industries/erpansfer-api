@@ -4,9 +4,12 @@ services:
     build:
       context: .
       dockerfile: 'Dockerfile'
+      target: development
     container_name: erpansfer-api-dev
     ports:
-      - '3000:3000'
+      - '3001:3000'
+    volumes:
+      - .:/app
     env_file:
       - .env
     networks:
