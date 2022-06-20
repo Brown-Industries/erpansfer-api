@@ -4,6 +4,7 @@ import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { InvoiceHeaderEntity } from './entities/invoiceHeader.entity';
+import { InvoiceEntity } from './entities/invoice.entity';
 
 @Controller('invoices')
 @ApiTags('invoices')
@@ -22,7 +23,7 @@ export class InvoicesController {
   }
 
   @Get(':id')
-  @ApiOkResponse({type: InvoiceHeaderEntity})
+  @ApiOkResponse({type: InvoiceEntity})
   findOne(@Param('id') id: string) {
     return this.invoicesService.findOne(+id);
   }

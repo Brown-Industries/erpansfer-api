@@ -42,13 +42,13 @@ model OrderLine {
 //TODO Maybe a generic "shipping" table would be better, can have PO and line #, carrier, tracking id, etc.
 
 model InvoiceHeader {
-  id        Int           @id @default(autoincrement())
-  invoiceId String        @unique
-  order     OrderHeader   @relation(fields: [orderId], references: [orderId])
-  orderId   String
-  name      String?
-  line      InvoiceLine[]
-  createDate DateTime @default(now())
+  id         Int           @id @default(autoincrement())
+  invoiceId  String        @unique
+  order      OrderHeader   @relation(fields: [orderId], references: [orderId])
+  orderId    String
+  name       String?
+  line       InvoiceLine[]
+  createDate DateTime      @default(now())
 }
 
 model InvoiceLine {
@@ -59,6 +59,7 @@ model InvoiceLine {
   unitPrice   Int
   invoice     InvoiceHeader @relation(fields: [invoiceId], references: [invoiceId])
   invoiceId   String
+  lineNumber  Int
 }
 
 model ShippingProvider {
@@ -75,7 +76,7 @@ model ShippingLine {
   trackingId         String
   refEntityType      String
   refEntityId        String
-  createDate DateTime @default(now())
+  createDate         DateTime         @default(now())
 }
 
 model Events {

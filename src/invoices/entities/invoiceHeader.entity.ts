@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Prisma, InvoiceHeader } from "@prisma/client";
+import { InvoiceHeader } from "@prisma/client";
 
 export class InvoiceHeaderEntity implements InvoiceHeader {
     @ApiProperty()
